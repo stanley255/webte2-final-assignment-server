@@ -1,5 +1,6 @@
 <?php
 
+require_once("octave.php");
 require_once("utils.php");
 $scriptRepository = require("experiment-script-repository.php");
 
@@ -26,6 +27,8 @@ function executeExperiment($from, $to, $singleCommand, $rangeCommand, $labels) {
     $cmdOut = $from == 0 ? executeOctaveCommand(sprintf(escapeCommand($script), $to)) : executeOctaveCommand(sprintf(escapeCommand($script), $from, $to));
     $ret->content = parseOutput($cmdOut->consoleOutput, $labels);
     $ret->returnCode = $cmdOut->returnValue;
+    $ret->rangeFrom = $from;
+    $ret->rangeTo = $to;
     return $ret;
 }
 
