@@ -2,6 +2,24 @@
 
 require_once("../db/Db.php");
 
+function getAllLogs() {
+    $queries = require_once("../db/queries.php");
+    $db = new Db();
+    $db->init();
+    $logs = $db->getRecordsFromDb($queries["get_all_logs"]);
+    $db->close();
+    return $logs;
+}
+
+function getExperimentLogReport() {
+    $queries = require_once("../db/queries.php");
+    $db = new Db();
+    $db->init();
+    $statistics = $db->getRecordsFromDb($queries["experiment_statistics"]);
+    $db->close();
+    return $statistics;
+}
+
 function logCallToCAS($commandType, $sessionID, $octaveOutput) {
     $queries = require_once("../db/queries.php");
     $db = new Db();
