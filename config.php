@@ -1,5 +1,10 @@
 <?php
 
+// API
+define("ALLOWED_METHODS",array("GET", "POST"));
+define("AVAILABLE_ENDPOINTS",array("console", "experiments", "logs", "stats"));
+define("EXPERIMENT_ENDPOINTS",array("pendulum", "ball", "suspension", "aircraft"));
+
 // OCTAVE
 define("OCTAVE_EXEC","octave");
 define("OCTAVE_EXEC_WITH_OPTIONS", "octave -W --eval ");
