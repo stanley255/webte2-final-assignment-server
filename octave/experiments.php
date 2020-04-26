@@ -36,7 +36,6 @@ function parseOutput($output, $labels) {
     $trimOutput = array();
     foreach ($output as $line) {
         $vector = array_map('doubleval', preg_split('/\s+/', trim($line)));
-//        $vector = preg_split('/\s+/', trim($line));
         array_push($trimOutput, convertVectorToObject($vector, $labels));
     }
     return $trimOutput;
