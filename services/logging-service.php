@@ -28,7 +28,8 @@ function logCallToCAS($commandType, $sessionID, $octaveOutput) {
         "command" => $commandType,
         "session" => $sessionID,
         "status" => $octaveOutput->returnCode === 0 ? "success" : "error",
-        "info" => getErrorMessage($commandType, $octaveOutput)
+        "info" => getErrorMessage($commandType, $octaveOutput),
+        "timestamp" => date('Y-m-d H:i:s', time() + 2 * 3600) // TODO timezone
     ));
     $db->close();
 }
@@ -47,7 +48,6 @@ function getErrorMessage($commandType, $octaveOutput) {
 function findErrorLine($octaveOutput) {
     foreach($octaveOutput->content as $line) {
         if (strpos($line, "error") !== false) {
-            var_dump($line);
             return $line;
         }
     }

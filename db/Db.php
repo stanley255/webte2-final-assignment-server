@@ -1,6 +1,7 @@
 <?php
 
 require_once('../config.php');
+require_once('../credentials.php');
 
 class Db {
     private $pdo;
