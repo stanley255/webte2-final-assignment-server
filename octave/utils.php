@@ -6,9 +6,7 @@ function escapeCommand($cmd) {
     if(($cmd[0] === '"' && $cmd[strlen($cmd) - 1] === '"') || ($cmd[0] === "'" && $cmd[strlen($cmd) - 1] === "'")) {
         $cmd = substr($cmd, 1, -1);
     }
-    $cmd = str_replace('\\\\', '', $cmd);
-    $cmd = str_replace('\\"', '"', $cmd);
-    return '"'.str_replace("\"", '\\"', $cmd).'"';
+    return escapeshellarg($cmd);
 }
 
 function redirectStdErrToStd($cmd) {
