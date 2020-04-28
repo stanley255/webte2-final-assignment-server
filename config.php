@@ -2,6 +2,7 @@
 
 // DB
 define("CHARSET", "utf8");
+define("TIMESTAMP_OFFSET", 2 * 3600);
 
 // API
 define("ALLOWED_METHODS",array("GET", "POST"));

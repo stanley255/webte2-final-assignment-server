@@ -2,6 +2,10 @@
 
 require_once("../db/Db.php");
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 function getAllLogs() {
     $queries = require_once("../db/queries.php");
     $db = new Db();
@@ -21,7 +25,7 @@ function getExperimentLogReport() {
 }
 
 function logCallToCAS($commandType, $sessionID, $octaveOutput, $to = "") {
-    $queries = require_once("../db/queries.php");
+    $queries = require("../db/queries.php");
     $db = new Db();
     $db->init();
     $db->executeScript($queries["insert_log"], array(
@@ -29,7 +33,7 @@ function logCallToCAS($commandType, $sessionID, $octaveOutput, $to = "") {
         "session" => $sessionID,
         "status" => $octaveOutput->returnCode === 0 ? "success" : "error",
         "info" => $octaveOutput->returnCode === 0 ? $to : getErrorMessage($commandType, $octaveOutput),
-        "timestamp" => date('Y-m-d H:i:s', time() + 2 * 3600) // TODO timezone
+        "timestamp" => date('Y-m-d H:i:s', time() + TIMESTAMP_OFFSET)
     ));
     $db->close();
 }
