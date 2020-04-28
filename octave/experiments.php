@@ -2,7 +2,6 @@
 
 require_once("octave.php");
 require_once("utils.php");
-$scriptRepository = require("experiment-script-repository.php");
 
 function ballOnStick($from, $to) {
     return executeExperiment($from, $to, "ballOnStick", "ballOnStringRange", BALL_ON_STICK_LABELS);
@@ -21,7 +20,7 @@ function aircraftTilt($from, $to) {
 }
 
 function executeExperiment($from, $to, $singleCommand, $rangeCommand, $labels) {
-    global $scriptRepository;
+    $scriptRepository = require("experiment-script-repository.php");
     $ret = new stdClass();
     $script = $from == 0 ? $scriptRepository[$singleCommand] : $scriptRepository[$rangeCommand];
     $cmdOut = $from == 0 ? executeOctaveCommand(sprintf(escapeCommand($script), $to)) : executeOctaveCommand(sprintf(escapeCommand($script), $from, $to));
