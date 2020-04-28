@@ -7,6 +7,12 @@ define("CHARSET", "utf8");
 define("ALLOWED_METHODS",array("GET", "POST"));
 define("AVAILABLE_ENDPOINTS",array("console", "experiments", "logs", "stats"));
 define("EXPERIMENT_ENDPOINTS",array("pendulum", "ball", "suspension", "aircraft"));
+define("ENDPOINT_TO_EXPERIMENT_MAPPING",array(
+    "pendulum" => "inversePendulum",
+    "ball" => "ballOnStick",
+    "suspension" => "carShockAbsorber",
+    "aircraft" => "aircraftTilt"
+));
 
 // OCTAVE
 define("OCTAVE_EXEC","octave");
@@ -21,5 +27,7 @@ define("AIRCRAFT_TILT_LABELS",array("x","y","rearFlapAngle"));
 define("FORBIDDEN_CMD_PATTERN", "/(pkg\s+install)|(pkg\s+uninstall)/");
 define("FORBIDDEN_CMD_ERR", "error: pkg install and pkg uninstall are forbidden");
 define("PARSE_CMD_ERR", "error: failed to parse command: ");
+
+define("DEFAULT_EXPERIMENT_VALUE", 0.0);
 
 ?>
