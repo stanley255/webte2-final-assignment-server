@@ -21,8 +21,10 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
                 if($requestMethod === 'POST') {
                     if (isset($_POST['session']) && isset($_POST['command'])) {
                         $ret = callOctaveCLI($_POST['command'], $_POST['session']);
-                        $ret->returnCode === 2 ? http_response_code(404) : http_response_code(200);
+                        $ret->returnCode === 2 ? http_response_code(400) : http_response_code(200);
                         echo json_encode($ret);
+                    } else {
+                        http_response_code(400);
                     }
                 } else {
                     http_response_code(405);
@@ -33,11 +35,16 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
                     $experiment = $uri[1];
                     if (isset($experiment) && strlen($experiment) > 0) {
                         if (in_array($experiment, EXPERIMENT_ENDPOINTS)) {
-                            $ret = mapEndpointToExperiment($experiment, $_GET['session'], $_GET['r']);
-                            $ret->returnCode === 2 ? http_response_code(404) : http_response_code(200);
-                            echo json_encode($ret);
+                            if(isset($_GET['session']) && isset($_GET['r'])) {
+                                $ret = mapEndpointToExperiment($experiment, $_GET['session'], $_GET['r']);
+                                $ret->returnCode === 2 ? http_response_code(400) : http_response_code(200);
+                                echo json_encode($ret);
+                            } else {
+                                http_response_code(400);
+                                echo json_encode("Bad experiment!");
+                            }
                         } else {
-                            http_response_code(404);
+                            http_response_code(400);
                             echo json_encode("Bad experiment!");
                         }
                     } else {
@@ -51,7 +58,13 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
             case "logs":
                 if($requestMethod === 'GET') {
                     $ret = getAllLogs();
-                    echo json_encode($ret);
+                    if(is_null($ret)) {
+                        http_response_code(400);
+                        echo json_encode(array());
+                    } else {
+                        http_response_code(200);
+                        echo json_encode($ret);
+                    }
                 } else {
                     http_response_code(405);
                 }
@@ -59,7 +72,13 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
             case "stats":
                 if($requestMethod === 'GET') {
                     $ret = getExperimentLogReport();
-                    echo json_encode($ret);
+                    if(is_null($ret)) {
+                        http_response_code(400);
+                        echo json_encode(array());
+                    } else {
+                        http_response_code(200);
+                        echo json_encode($ret);
+                    }
                 } else {
                     http_response_code(405);
                 }
