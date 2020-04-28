@@ -5,7 +5,7 @@
     function callOctaveExperiment($experimentName, $from, $to, $sessionID) {
         require_once("../octave/experiments.php");
         $ret = $experimentName($from, $to);
-        logCallToCAS($experimentName, $sessionID, $ret);
+        logCallToCAS($experimentName, $sessionID, $ret, $to);
         return $ret;
     }
 

@@ -20,7 +20,7 @@ function getExperimentLogReport() {
     return $statistics;
 }
 
-function logCallToCAS($commandType, $sessionID, $octaveOutput) {
+function logCallToCAS($commandType, $sessionID, $octaveOutput, $to = "") {
     $queries = require_once("../db/queries.php");
     $db = new Db();
     $db->init();
@@ -28,7 +28,7 @@ function logCallToCAS($commandType, $sessionID, $octaveOutput) {
         "command" => $commandType,
         "session" => $sessionID,
         "status" => $octaveOutput->returnCode === 0 ? "success" : "error",
-        "info" => getErrorMessage($commandType, $octaveOutput),
+        "info" => $octaveOutput->returnCode === 0 ? $to : getErrorMessage($commandType, $octaveOutput),
         "timestamp" => date('Y-m-d H:i:s', time() + 2 * 3600) // TODO timezone
     ));
     $db->close();
