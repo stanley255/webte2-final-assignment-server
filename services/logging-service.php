@@ -2,10 +2,6 @@
 
 require_once("../db/Db.php");
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 function getAllLogs() {
     $queries = require_once("../db/queries.php");
     $db = new Db();
