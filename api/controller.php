@@ -10,6 +10,12 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 
 /* API FRONT CONTROLLER */
 
+$headers = apache_request_headers();
+if(!isset($headers['api-key']) || strcmp($headers['api-key'], API_KEY) !== 0) {
+    http_response_code(401);
+    die('Enter valid API KEY to access this API!');
+}
+
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $uri = explode('/', $_GET['uri']);
 $endpoint = $uri[0];
