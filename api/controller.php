@@ -1,6 +1,7 @@
 <?php
 
 require_once("service.php");
+require_once("../credentials.php");
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -10,8 +11,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Author
 
 /* API FRONT CONTROLLER */
 
-$headers = apache_request_headers();
-if(!isset($headers['api-key']) || strcmp($headers['api-key'], API_KEY) !== 0) {
+if(!isset($_GET['api-key']) || strcmp($_GET['api-key'], API_KEY) !== 0) {
     http_response_code(401);
     die('Enter valid API KEY to access this API!');
 }
@@ -63,7 +63,11 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
                 break;
             case "logs":
                 if($requestMethod === 'GET') {
-                    $ret = getAllLogs();
+                    if(isset($_GET['session']) && isset($_GET['experiment'])) {
+                        $ret = getR($_GET['session'], $_GET['experiment']);
+                    } else {
+                        $ret = getAllLogs();
+                    }
                     if(is_null($ret)) {
                         http_response_code(400);
                         echo json_encode(array());
