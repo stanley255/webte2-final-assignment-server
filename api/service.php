@@ -19,3 +19,8 @@ function getLastValidCommandValue($session, $command) {
     $db->close();
     return is_null($from) ? DEFAULT_EXPERIMENT_VALUE : $from;
 }
+
+function getR($session, $command) {
+    $val = getLastValidCommandValue($session, $command);
+    return array("r" => doubleval($val));
+}
