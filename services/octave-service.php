@@ -12,7 +12,7 @@
     function callOctaveCLI($command, $sessionID) {
         require_once("../octave/command-line.php");
         $ret = executeCommand($command);
-        logCallToCAS("commandLine", $sessionID, $ret);
+        logCallToCAS("commandLine", $sessionID, $ret, $command);
         return $ret;
     }
 
