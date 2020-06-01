@@ -1,8 +1,7 @@
 <?php
 require_once("../config.php");
 require_once("../services/octave-service.php");
-
-/* PLACE FOR FUTURE IMPLEMENTATION OF SERVICES */
+require_once("../octave/experiments.php");
 
 function mapEndpointToExperiment($endpointName, $session, $value) {
     $command = ENDPOINT_TO_EXPERIMENT_MAPPING[$endpointName];
@@ -22,5 +21,9 @@ function getLastValidCommandValue($session, $command) {
 
 function getR($session, $command) {
     $val = getLastValidCommandValue($session, $command);
-    return array("r" => doubleval($val));
+    $r = doubleval($val);
+    return array(
+        "r" => $r,
+        "lastPosition" => end($command(0,$r)->content)
+    );
 }
