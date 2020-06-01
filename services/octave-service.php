@@ -5,7 +5,10 @@
     function callOctaveExperiment($experimentName, $from, $to, $sessionID) {
         require_once("../octave/experiments.php");
         $ret = $experimentName(doubleval($from), doubleval($to));
-        logCallToCAS($experimentName, $sessionID, $ret, $to);
+        $logInfo = new stdClass();
+        $logInfo->r = doubleval($to);
+        $logInfo->lastPosition = end($ret->content);
+        logCallToCAS($experimentName, $sessionID, $ret, json_encode($logInfo));
         return $ret;
     }
 

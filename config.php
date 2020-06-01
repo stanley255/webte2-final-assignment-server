@@ -29,6 +29,8 @@ define("FORBIDDEN_CMD_PATTERN", "/(pkg\s+install)|(pkg\s+uninstall)/");
 define("FORBIDDEN_CMD_ERR", "error: pkg install and pkg uninstall are forbidden");
 define("PARSE_CMD_ERR", "error: failed to parse command: ");
 
-define("DEFAULT_EXPERIMENT_VALUE", 0.0);
+define("DEFAULT_EXPERIMENT_VALUE", "{
+    \"r\": 0
+}");
 
 ?>

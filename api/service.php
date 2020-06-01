@@ -5,7 +5,7 @@ require_once("../octave/experiments.php");
 
 function mapEndpointToExperiment($endpointName, $session, $value) {
     $command = ENDPOINT_TO_EXPERIMENT_MAPPING[$endpointName];
-    $from = getLastValidCommandValue($session, $command);
+    $from = json_decode(getLastValidCommandValue($session, $command))->r;
     return callOctaveExperiment($command, $from, $value, $session);
 }
 
@@ -14,16 +14,11 @@ function getLastValidCommandValue($session, $command) {
     $db = new Db();
     $db->init();
     $data = array("command" => $command, "session" => $session);
-    $from = $db->getRecordsFromDb($queries["get_current_session_value"], $data)[0]['r'];
+    $from = $db->getRecordsFromDb($queries["get_current_session_value"], $data)[0]['json'];
     $db->close();
     return is_null($from) ? DEFAULT_EXPERIMENT_VALUE : $from;
 }
 
-function getR($session, $command) {
-    $val = getLastValidCommandValue($session, $command);
-    $r = doubleval($val);
-    return array(
-        "r" => $r,
-        "lastPosition" => end($command(0,$r)->content)
-    );
+function getLastExperimentData($session, $command) {
+    return getLastValidCommandValue($session, $command);
 }

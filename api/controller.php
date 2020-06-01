@@ -64,7 +64,7 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
             case "logs":
                 if($requestMethod === 'GET') {
                     if(isset($_GET['session']) && isset($_GET['experiment'])) {
-                        $ret = getR($_GET['session'], $_GET['experiment']);
+                        $ret = getLastExperimentData($_GET['session'], $_GET['experiment']);
                     } else {
                         $ret = getAllLogs();
                     }
@@ -73,7 +73,7 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
                         echo json_encode(array());
                     } else {
                         http_response_code(200);
-                        echo json_encode($ret);
+                        echo $ret;
                     }
                 } else {
                     http_response_code(405);
