@@ -73,7 +73,7 @@ if(in_array($requestMethod, ALLOWED_METHODS)) {
                         echo json_encode(array());
                     } else {
                         http_response_code(200);
-                        echo $ret;
+                        echo (isset($_GET['session']) && isset($_GET['experiment'])) ? $ret : json_encode($ret);
                     }
                 } else {
                     http_response_code(405);
